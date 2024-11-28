@@ -8,7 +8,7 @@ import lib.BME280 as BME280
 
 mqtt_base_topic = "weather"
 device_name = "picow12992"
-sleep_time = 30
+sleep_time = 300
 
 i2c = I2C(id=0, scl=Pin(5), sda=Pin(4), freq=10000)
 bme = BME280.BME280(i2c=i2c, addr=0x76)
@@ -60,7 +60,7 @@ try:
             payload = {'temperature': bme.temperature[:-2], 'humidity': bme.humidity[:-2], 'pressure': bme.pressure[:-4]}
             print(f"{mqtt_base_topic}/{device_name}", json.dumps(payload))
             client.publish(f"{mqtt_base_topic}/{device_name}", json.dumps(payload))
-            sleep(3)
+            sleep(sleep_time)
 
 except Exception as e:
     print('Error:', e)
