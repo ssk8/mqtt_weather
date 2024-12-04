@@ -51,11 +51,13 @@ try:
                 #payload["gas_resistance"] = int(sensor.data.gas_resistance)
                 ...
         if payload:
-            publish.single(hostname=hostname, topic=f"{mqtt_base_topic}/{device_name}", payload=json.dumps(payload))
-            print(payload)
-            sleep(sleep_time)
+            try:
+                publish.single(hostname=hostname, topic=f"{mqtt_base_topic}/{device_name}", payload=json.dumps(payload))
+                print(payload)
+                sleep(sleep_time)
+            except TimeoutError as e:
+                print(e)
         sleep(1)
 
 except KeyboardInterrupt:
     print("\ngoodbye")
-
